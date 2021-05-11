@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Joueur
+{% endblock %}
+
+{% block body %}
+
+	<div class="container bg-light">
+		<div class="row pt-5 justify-content-center">
+
+			<h1 class="text-center my-5">Editer un joueur</h1>
+
+			<div class="col-12 d-flex justify-content-center bg-light">
+				<div class="justify-content-center text-center">
+
+
+					{{ include('joueurs/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container bg-light pb-5 pt-5 d-flex justify-content-center">
+		<div class="col-6 d-flex justify-content-around">
+
+			<a class="btn btn-info" href="{{ path('joueurs_index') }}">Retour à l'index</a>
+
+			<form method="post" action="{{ path('joueurs_delete', {'id': joueur.id}) }}" onsubmit="return confirm('Souhaitez vous réellement supprimer ce joueur?');">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ joueur.id) }}">
+				<button class="btn btn-danger">Supprimer le joueur</button>
+			</form>
+		</div>
+	</div>
+
+
+{% endblock %}

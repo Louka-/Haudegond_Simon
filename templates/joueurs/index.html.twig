@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Joueur index
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="container pt-5 pb-5 bg-light">
+		<div class="row justify-content-center">
+			<h1 class="text-center my-5">Index des joueurs</h1>
+			<div class="col-12 d-flex justify-content-center">
+				<div class="justify-content-center text-center">
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Nom</th>
+								<th>Equipe</th>
+								<th>Actions</th>
+								<th>Supprimer</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for joueur in joueurs %}
+								<tr>
+									<td>{{ joueur.id }}</td>
+									<td>{{ joueur.nom }}</td>
+									<td>{{ joueur.relation.nom }}</td>
+									<td>
+										<a class="btn btn-info" href="{{ path('joueurs_show', {'id': joueur.id}) }}">Détail</a>
+										<a class="btn btn-success" href="{{ path('joueurs_edit', {'id': joueur.id}) }}">Editer</a>
+									</td>
+									<td>
+										<form method="post" action="{{ path('joueurs_delete', {'id': joueur.id}) }}" onsubmit="return confirm('Souhaitez vous réellement supprimer ce joueur?');">
+											<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ joueur.id) }}">
+											<button class="btn btn-danger">
+												<i class="fa fa-trash" aria-hidden="true"></i>
+											</button>
+										</form>
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="6">no records found</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+
+					<a class="btn btn-danger" href="{{ path('joueurs_new') }}">Nouveau joueur</a>
+
+					{% for message in app.flashes('notice') %}
+						<div class="flash-notice">
+							{{ message }}
+						</div>
+					{% endfor %}
+
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+{% endblock %}
